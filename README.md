@@ -1,2 +1,2 @@
 # myblog
-a simple web blog
+a simple web blog (still working)
