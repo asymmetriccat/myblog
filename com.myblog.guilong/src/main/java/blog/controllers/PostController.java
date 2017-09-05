@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import blog.models.Post;
+import blog.domain.Post;
 import blog.services.NotificationService;
 import blog.services.PostService;
 

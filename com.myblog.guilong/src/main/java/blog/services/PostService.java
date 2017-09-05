@@ -2,7 +2,7 @@ package blog.services;
 
 import java.util.List;
 
-import blog.models.Post;
+import blog.domain.Post;
 
 public interface PostService {
   List<Post> findAll();
