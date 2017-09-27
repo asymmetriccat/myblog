@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import blog.dao.PostDao;
 import blog.domain.Post;
 import blog.domain.User;
 
 @Service
 public class PostServiceStubImpl implements PostService {
-	 private List<Post> posts = new ArrayList<Post>() {{
+	
+	
+	 private List<Post> posts = new ArrayList<Post>();
+	 /*{{
 	        add(new Post(1L, "First Post", "<p>Line #1.</p><p>Line #2</p>", null));
 	        add(new Post(2L, "Second Post","<p>Second content: <ul> <li>line 1</li><li>Line 2</li></p>", new User( "pesho10", "guilong li", "gligoooogle@gmail.com", "813-3857101")));
 	        add(new Post(3L, "Post #3", "<p>The post number 3 nice</p>", new User("jerry", "Jerry Li", "jeerryli@yahoo.com", "8138621298")));
@@ -20,30 +25,32 @@ public class PostServiceStubImpl implements PostService {
 	        add(new Post(5L, "Post Number 5", "<p>Just posting</p>", null));
 	        add(new Post(6L, "Sixth Post", "<p>Another interesting post</p>", null));
 	    }};
-	    
+	    */
+	 @Autowired
+	 private PostDao postDao; 
 	@Override
 	public List<Post> findAll() {
 		// TODO Auto-generated method stub
-		return this.posts;
+		return postDao.findAll();
 	}
 
 	@Override
 	public List<Post> findLatest5() {
 		// TODO Auto-generated method stub
-		return this.posts.stream().sorted((a,b)->b.getDate().compareTo(a.getDate())).limit(5).collect(Collectors.toList());
+		return postDao.findAll().stream().sorted((a,b)->b.getDate().compareTo(a.getDate())).limit(5).collect(Collectors.toList());
 	}
 
 	@Override
 	public Post findById(Long id) {
 		// TODO Auto-generated method stub
-		return this.posts.stream().filter(p->Objects.equals(p.getId(), id)).findFirst().orElse(null);
+		return postDao.findAll().stream().filter(p->Objects.equals(p.getId(), id)).findFirst().orElse(null);
 	}
 
 	@Override
 	public Post edit(Post post) {
 		// TODO Auto-generated method stub
-		for(int i=0; i<this.posts.size(); i++){
-			if(Objects.equals(this.posts.get(i).getId(), post.getId())){
+		for(int i=0; i<postDao.findAll().size(); i++){
+			if(Objects.equals(postDao.findAll().get(i).getId(), post.getId())){
 				this.posts.set(i,post);
 				return post;
 			}
@@ -54,8 +61,8 @@ public class PostServiceStubImpl implements PostService {
 	@Override
 	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
-		for(int i=0; i<this.posts.size();i++){
-			if(Objects.equals(this.posts.get(i), id)){
+		for(int i=0; i<postDao.findAll().size();i++){
+			if(Objects.equals(postDao.findAll().get(i), id)){
 				this.posts.remove(i);
 				return;
 			}
@@ -65,9 +72,12 @@ public class PostServiceStubImpl implements PostService {
 	@Override
 	public Post create(Post post) {
 		// TODO Auto-generated method stub
-		 post.setId(this.posts.stream().mapToLong(p->p.getId()).max().getAsLong() +1);
+		 post.setId(postDao.findAll().stream().mapToLong(p->p.getId()).max().getAsLong() +1);
 		 this.posts.add(post);
 		 return post;
+	}
+	public void savePost(Post post) {
+		
 	}
  
 }
