@@ -17,7 +17,7 @@ public class PostController {
 	@Autowired
 	private NotificationService notifyService;
 	
-	@RequestMapping("/posts/view/{id}")
+	@RequestMapping("view/{id}")
 	public String view(@PathVariable("id") Long id, Model model){
 		Post post=postService.findById(id);
 		if(post==null){
@@ -25,7 +25,7 @@ public class PostController {
 			return "redirect:/";
 		}
 		model.addAttribute("post", post);
-		return "posts/view";
+		return "view";
 	}
 
 }

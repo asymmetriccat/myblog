@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="site-head">
+
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../public/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+<link rel="icon" href="../public/img/favicon.ico" th:href="@{/img/favicon.ico}"/>
+<script src="../public/js/jquery-3.1.0.min.js" th:src="@{/js/jquery-3.1.0.min.js}"></script>
+<script src="../public/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+  <title>Login</title>
+</head>
+
+<body>
+
+<header th:replace="layout :: site-header" ></header>
+
+
+   <div class="container">
+        <div class="card card-container">
+            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <p id="profile-name" class="profile-name-card"></p>
+            <form class="form-signin" method="post" th:object="${loginForm}">
+                <span id="reauth-email" class="reauth-email"></span>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" th:value="*{email}" th:required ="require" th:autofocus="autofocus"></input>
+                
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" th:value="*{password}" th:required ="required"></input>
+                <div id="remember" class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"/> Remember me 
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            </form><!-- /form -->
+            <a href="#" class="forgot-password">
+                Forgot the password?
+            </a>
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+
+<!--  
+<h1>Please sign in</h1>
+
+<form method="post" th:object="${loginForm}">
+  <div><label for="username">Username:</label></div>
+  <input id="username" type="text" name="username" th:value="*{username}" />
+  <span class="formError" th:if="${#fields.hasErrors('username')}"
+                                th:errors="*{username}">Invalid username</span>
+
+  <div><label for="password" th:value="*{username}">Password:</label></div>
+  <input id="password" type="password" name="password" th:value="*{password}" />
+  <span class="formError" th:if="${#fields.hasErrors('password')}"
+                                th:errors="*{password}">Invalid password</span>
+
+  <div><input type="submit" value="login"/>
+  <a href="register.html" th:href="@{/register}">[Go to Register]</a></div>
+</form>
+-->
+<footer th:replace="layout :: site-footer" ></footer>
+
+</body>
+
+</html>

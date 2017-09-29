@@ -13,7 +13,7 @@ import blog.domain.User;
 import blog.services.UserService;
 
 @Controller
-@RequestMapping("/user")
+
 public class UserController {
 	@Autowired
     private UserService userService;

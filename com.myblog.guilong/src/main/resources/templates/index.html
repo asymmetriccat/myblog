@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="site-head">
 
-<head th:replace="layout::site-head">
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../public/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+<link rel="icon" href="../public/img/favicon.ico" th:href="@{/img/favicon.ico}"/>
+<script src="../public/js/jquery-3.1.0.min.js" th:src="@{/js/jquery-3.1.0.min.js}"></script>
+<script src="../public/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
     <title>Jack's Blog</title>
 </head>
 
 <body>
 
-<header th:replace="layout::site-header" />
+<header th:replace="layout::site-header" ></header>
 
 <aside>
 <h2>Recent Posts</h2>
@@ -28,7 +33,7 @@
     </article>
 </main>
 
-<footer th:replace="layout::site-footer" />
+<footer th:replace="layout::site-footer" ></footer>
 </body>
 
 </html>  

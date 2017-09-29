@@ -5,17 +5,17 @@ import javax.validation.constraints.Size;
 
 public class LoginForm {
 	@Size(min=2, max=30, message="Username size should be in the range of [2...30]")
-  private String username;
+  private String email;
   
 	@NotNull
 	@Size(min=1, max=50)
   private String password;
   
-  public String getUsername(){
-	  return username;
+  public String getEmail(){
+	  return email;
   }
-  public void setUsername(String username){
-	  this.username=username;
+  public void setEmail(String email){
+	  this.email=email;
 	  
   }
   public String getPassword(){
