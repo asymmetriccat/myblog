@@ -80,7 +80,7 @@ public String getEmail() {
    @OneToMany(mappedBy="author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
    @JsonIgnore
    private Set<Post> posts=new HashSet<>();
-public long getId() {
+public Long getId() {
 	return id;
 }
 public void setId(Long id) {

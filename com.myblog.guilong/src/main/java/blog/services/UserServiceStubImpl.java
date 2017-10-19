@@ -107,7 +107,8 @@ public class UserServiceStubImpl implements UserService{
 			String encryptedPassword=passwordEncoder.encode(user.getPassword());
 			user.setPassword(encryptedPassword);
 			
-			for(UserRole ur:userRoles) {
+			for(UserRole ur:userRoles) 
+			{
 				roleDao.save(ur.getRole());
 			}
 		

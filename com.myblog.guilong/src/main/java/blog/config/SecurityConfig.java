@@ -58,22 +58,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+    	/* http.authorizeRequests()
+		.antMatchers("/login").permitAll()
+		.anyRequest().fullyAuthenticated()
+		.and()
+	.formLogin().loginPage("/login").failureUrl("/login?error")
+		.and()
+	.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.and()
+	.exceptionHandling().accessDeniedPage("/access?error");
+    	*/
+    	
+       http
                 .authorizeRequests().
 //                antMatchers("/**").
                 antMatchers(PUBLIC_MATCHERS).
                 permitAll().anyRequest().authenticated();
+               
 
         http
-                .csrf().disable().cors().disable()
+                .csrf().disable()
+                .cors().disable()
                 .formLogin().failureUrl("/index?error").defaultSuccessUrl("/layout").loginPage("/index").permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
                 .and()
                 .rememberMe();
+                
+    	
     }
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.inMemoryAuthentication().withUser("guilonng@gmail.com").password("ilikejava").roles("USER"); //This is in-memory authentication
         //auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
     }

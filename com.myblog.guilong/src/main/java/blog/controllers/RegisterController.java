@@ -50,7 +50,7 @@ public class RegisterController {
     		Set<UserRole> userRoles=new HashSet<>();
     		userRoles.add(new UserRole(user,roleDao.findByName("ROLE_USER")));
     		
-    		userService.createUser(user, userRoles);
+    		userService.saveUser(user);
     		return "index";
     		//return "redirect:/";
     	}
