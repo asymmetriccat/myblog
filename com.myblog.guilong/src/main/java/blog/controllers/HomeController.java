@@ -24,4 +24,9 @@ public class HomeController {
 		model.addAttribute("latest3posts", latest3Posts);
 		return "index";
 	}
+	
+	@RequestMapping("/index")
+    public String index() {
+        return "index";
+    }
 }

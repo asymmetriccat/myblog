@@ -2,8 +2,11 @@ package blog.services;
 
 
 
+import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,7 @@ import blog.domain.User;
 import blog.domain.security.UserRole;
 
 @Service
+@Transactional
 public class UserServiceStubImpl implements UserService{
 	private static final Logger LOG= LoggerFactory.getLogger(UserService.class);
     @Autowired
@@ -79,7 +83,12 @@ public class UserServiceStubImpl implements UserService{
 	@Override
 	public void disableUser(String username) {
 		// TODO Auto-generated method stub
-		
+		User user = findByUsername(username);
+        user.setEnabled(false);
+        System.out.println(user.isEnabled());
+        userDao.save(user);
+        System.out.println(username + " is disabled.");
+    
 	}
 	@Override
 	public User findByEmail(String email) {
@@ -88,24 +97,30 @@ public class UserServiceStubImpl implements UserService{
 	}
 	@Override
 	public User createUser(User user, Set<UserRole> userRoles) {
-		User localUser=userDao.findByUsername(user.getUsername());
 		
+			User localUser=userDao.findByUsername(user.getUsername());
 		if(localUser!=null) {
 			LOG.info("User with username {} already exist. Nothing will be done." , user.getUsername());
 		}
 		else {
+			
 			String encryptedPassword=passwordEncoder.encode(user.getPassword());
 			user.setPassword(encryptedPassword);
+			
 			for(UserRole ur:userRoles) {
 				roleDao.save(ur.getRole());
 			}
+		
 			user.getUserRoles().addAll(userRoles);
 			user.setAccount(AccountService.createAccount());
 			localUser=userDao.save(user);
+			
 		}
 		return localUser;
-	}
 	
+	
+	
+	}
 	
      
 }

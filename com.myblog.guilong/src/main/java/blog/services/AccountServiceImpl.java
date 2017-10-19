@@ -8,7 +8,7 @@ import blog.domain.Account;
 
 @Service 
 public class AccountServiceImpl implements AccountService{
-   @Autowired
+   
 	private static int nextAccountNumber=10000000;
 	@Autowired
    private AccountDao accountDao;

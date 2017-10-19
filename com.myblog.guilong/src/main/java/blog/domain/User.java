@@ -33,7 +33,7 @@ import blog.domain.security.UserRole;
 public class User implements UserDetails{
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="userId")
+	@Column(name="userId", nullable=false, updatable=false)
    public Long id;
 	
 	@Column(name="email", nullable=false, unique=true)
@@ -42,6 +42,7 @@ public class User implements UserDetails{
    private String username;
    private String password;
    private String fullName;
+  
    @OneToOne
    private Account account;
    @OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -52,6 +53,7 @@ public class User implements UserDetails{
    public Set<UserRole> getUserRoles() {
 	return userRoles;
 }
+   
 public void setUserRoles(Set<UserRole> userRoles) {
 	this.userRoles = userRoles;
 }
@@ -112,20 +114,14 @@ public void setPosts(Set<Post> posts) {
 public User() {
 	// TODO Auto-generated constructor stub
 }
-public User(String username, String fullName, String email, String phoneNumber) {
-	
-	
-	this.username = username;
-	this.fullName = fullName;
-	this.email=email;
-	this.phoneNumber=phoneNumber;
-}
+
+
 
 @Override
 public String toString() {
-	return "User [id=" + id + ", email=" + email + ", phoneNumber=" + phoneNumber + ", userName=" + username
-			+ ", password=" + password + ", fullName=" + fullName + ", account=" + account + ", userRoles=" + userRoles
-			+ ", enabled=" + enabled + ", posts=" + posts + "]";
+	return "User [id=" + id + ", email=" + email + ", phoneNumber=" + phoneNumber + ", username=" + username
+			+ ", password=" + password + ", fullName=" + fullName 
+			+ ", account=" + account + ", userRoles=" + userRoles + ", enabled=" + enabled + ", posts=" + posts + "]";
 }
 @Override
 public Collection<? extends GrantedAuthority> getAuthorities() {

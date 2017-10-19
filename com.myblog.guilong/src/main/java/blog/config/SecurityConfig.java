@@ -4,9 +4,11 @@ import java.security.SecureRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.dao.SaltSource;
+
+
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,12 +23,14 @@ import blog.services.UserSecurityService;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
+@ComponentScan
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
-	@Autowired
-	private Environment env;
-	@Autowired
-	private UserSecurityService userSecurityService;
+	
+
+    @Autowired
+    private UserSecurityService userSecurityService;
+
 	private static final String SALT="salt";
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -42,11 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/",
             "/login/**",
             "/layout/**",
-            //"/error/**/*",
+           "/error/**/*",
             "/console/**",
-            "/signup",
+            "/register/**",
             "/templates/**",
-            "/public/**"
+            "/public/**",
+            "index/**",
+            "posts/**"
+            
     };
 
     @Override
@@ -64,5 +71,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
                 .and()
                 .rememberMe();
+    }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+       auth.inMemoryAuthentication().withUser("guilonng@gmail.com").password("ilikejava").roles("USER"); //This is in-memory authentication
+        //auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
     }
 }

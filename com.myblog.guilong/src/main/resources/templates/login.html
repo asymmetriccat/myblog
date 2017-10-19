@@ -22,8 +22,9 @@
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" method="post" th:object="${loginForm}">
                 <span id="reauth-email" class="reauth-email"></span>
+                Email:
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" th:value="*{email}" th:required ="require" th:autofocus="autofocus"></input>
-                
+                Password:
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" th:value="*{password}" th:required ="required"></input>
                 <div id="remember" class="checkbox">
                     <label>
