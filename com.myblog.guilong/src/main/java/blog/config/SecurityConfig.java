@@ -58,29 +58,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	/* http.authorizeRequests()
-		.antMatchers("/login").permitAll()
-		.anyRequest().fullyAuthenticated()
-		.and()
-	.formLogin().loginPage("/login").failureUrl("/login?error")
-		.and()
-	.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.and()
-	.exceptionHandling().accessDeniedPage("/access?error");
-    	*/
     	
        http
                 .authorizeRequests().
 //                antMatchers("/**").
                 antMatchers(PUBLIC_MATCHERS).
-                permitAll().anyRequest().authenticated();
+                permitAll();
                
 
         http
                 .csrf().disable()
                 .cors().disable()
-                .formLogin().failureUrl("/index?error").defaultSuccessUrl("/layout").loginPage("/index").permitAll()
-                .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
                 .and()
                 .rememberMe();
@@ -93,3 +81,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
     }
 }
+

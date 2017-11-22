@@ -8,6 +8,7 @@ import blog.domain.security.UserRole;
 
 public interface UserService {
    public boolean authenticate(String username, String password);
+   
    public User findByUsername(String username);
    public User findByEmail(String email);
    boolean checkUserExists(String username, String email);

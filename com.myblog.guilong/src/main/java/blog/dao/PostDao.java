@@ -10,6 +10,7 @@ import blog.domain.User;
 public interface PostDao extends CrudRepository<Post, Long>{
 	Post findByAuthor(User author);
 	Post findByTitle(String title);
+	Post findById(Long id);
 	List<Post> findAll();
-  
+    
 }

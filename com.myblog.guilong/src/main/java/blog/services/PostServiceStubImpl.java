@@ -17,15 +17,7 @@ public class PostServiceStubImpl implements PostService {
 	
 	
 	 private List<Post> posts = new ArrayList<Post>();
-	 /*{{
-	        add(new Post(1L, "First Post", "<p>Line #1.</p><p>Line #2</p>", null));
-	        add(new Post(2L, "Second Post","<p>Second content: <ul> <li>line 1</li><li>Line 2</li></p>", new User( "pesho10", "guilong li", "gligoooogle@gmail.com", "813-3857101")));
-	        add(new Post(3L, "Post #3", "<p>The post number 3 nice</p>", new User("jerry", "Jerry Li", "jeerryli@yahoo.com", "8138621298")));
-	        add(new Post(4L, "Forth Post", "<p>Not interesting post</p>", null));
-	        add(new Post(5L, "Post Number 5", "<p>Just posting</p>", null));
-	        add(new Post(6L, "Sixth Post", "<p>Another interesting post</p>", null));
-	    }};
-	    */
+	    
 	 @Autowired
 	 private PostDao postDao; 
 	@Override
@@ -35,9 +27,9 @@ public class PostServiceStubImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> findLatest5() {
+	public List<Post> findLatest10() {
 		// TODO Auto-generated method stub
-		return postDao.findAll().stream().sorted((a,b)->b.getDate().compareTo(a.getDate())).limit(5).collect(Collectors.toList());
+		return postDao.findAll().stream().sorted((a,b)->b.getDate().compareTo(a.getDate())).limit(10).collect(Collectors.toList());
 	}
 
 	@Override

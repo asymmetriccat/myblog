@@ -1,31 +1,48 @@
 package blog.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import blog.domain.Post;
-import blog.services.NotificationService;
 import blog.services.PostService;
 
-@Controller
+
+@RestController
 public class PostController {
 	@Autowired
 	private PostService postService;
-	@Autowired
-	private NotificationService notifyService;
 	
-	@RequestMapping("view/{id}")
-	public String view(@PathVariable("id") Long id, Model model){
-		Post post=postService.findById(id);
-		if(post==null){
-			notifyService.addErrorMessage("Cannot find post #" + id);
-			return "redirect:/";
-		}
-		model.addAttribute("post", post);
-		return "view";
+	@RequestMapping(value="/posts/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Post> getPost (@PathVariable Long id){
+	Post post=postService.findById(id);
+	HttpStatus status= post!=null? HttpStatus.OK:HttpStatus.NOT_FOUND; 
+	return new ResponseEntity<Post>(post,status);	
 	}
-
+	
+	@RequestMapping(value="/user/{user_id}/post", method=RequestMethod.POST)
+	public ResponseEntity<Post> creatPost(@PathVariable String user_id, @RequestBody Post input) {
+		Post newPost=postService.create(input);
+		HttpStatus status=HttpStatus.OK;
+	 
+		return new ResponseEntity<Post>(newPost, status);
+   }
+	
+	@RequestMapping(value="/posts", method=RequestMethod.GET)
+	public ResponseEntity<String> deletePost(@PathVariable Long post_id){
+		HttpStatus status;
+		Post toDelete =postService.findById(post_id);
+		if (toDelete!=null) {
+		postService.deleteById(post_id);
+		status=HttpStatus.OK;
+		}
+		else status =HttpStatus.NOT_FOUND;
+		return new ResponseEntity<String>("Post was deleted",status);
+	}
 }

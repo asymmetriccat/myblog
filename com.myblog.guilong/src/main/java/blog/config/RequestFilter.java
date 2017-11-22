@@ -35,8 +35,7 @@ public class RequestFilter {
 	            System.out.println("Pre-flight");
 	            response.setHeader("Access-Control-Allow-Methods", "POST,GET,DELETE");
 	            response.setHeader("Access-Control-Max-Age", "3600");
-	            response.setHeader("Access-Control-Allow-Headers", "authorization, content-type," +
-	                    "access-control-request-headers,access-control-request-method,accept,origin,authorization,x-requested-with");
+	            response.setHeader("Access-Control-Allow-Headers", "authorization, content-type," + "access-control-request-headers,access-control-request-method,accept,origin,authorization,x-requested-with");
 	            response.setStatus(HttpServletResponse.SC_OK);
 	        }
 
@@ -46,5 +45,5 @@ public class RequestFilter {
 
 	    public void destroy() {}
 
-	}
-
+	
+}

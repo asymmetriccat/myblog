@@ -1,32 +1,30 @@
 package blog.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import blog.domain.Post;
 import blog.services.*;
 
-@Controller
+
+@RestController
 public class HomeController {
 	@Autowired
 	private PostService postService;
-
-	@RequestMapping("/")
-	public String index(Model model) {
-		List<Post> latest5Posts = postService.findLatest5();
-		model.addAttribute("latest5posts", latest5Posts);
-		List<Post> latest3Posts = latest5Posts.stream().limit(3).collect(Collectors.toList());
-		model.addAttribute("latest3posts", latest3Posts);
-		return "index";
+	
+	
+	@RequestMapping(value="/posts/latest10Posts", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> ShowLatest10Posts() {
+		List<Post> latest10Posts = postService.findLatest10();
+		HttpStatus status= latest10Posts.isEmpty()? HttpStatus.OK:HttpStatus.NOT_FOUND; 
+		return new ResponseEntity<List<Post>>(latest10Posts,status);
 	}
 	
-	@RequestMapping("/index")
-    public String index() {
-        return "index";
-    }
+	
 }

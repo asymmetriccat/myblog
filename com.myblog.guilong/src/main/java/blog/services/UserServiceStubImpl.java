@@ -1,8 +1,6 @@
 package blog.services;
 
 
-
-import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import blog.dao.RoleDao;
@@ -26,18 +23,17 @@ public class UserServiceStubImpl implements UserService{
 	private static final Logger LOG= LoggerFactory.getLogger(UserService.class);
     @Autowired
 	private UserDao userDao;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+   
     @Autowired
     private AccountService AccountService;
     
     @Autowired
     private RoleDao roleDao;
 	@Override
-	public boolean authenticate(String username, String password) {
+	public boolean authenticate(String email, String password) {
 		// TODO Auto-generated method stub
-		User user=userDao.findByUsername(username);
-		return username==user.getUsername()&&password==user.getPassword();
+		User user=userDao.findByEmail(email);
+		return email==user.getEmail()&&password==user.getPassword();
 		
 	}
 	@Override
@@ -66,6 +62,7 @@ public class UserServiceStubImpl implements UserService{
 	@Override
 	public User saveUser(User user) {
 		// TODO Auto-generated method stub
+		user.setPassword(user.getPassword());
 		return userDao.save(user);
 	}
 	@Override
@@ -104,8 +101,7 @@ public class UserServiceStubImpl implements UserService{
 		}
 		else {
 			
-			String encryptedPassword=passwordEncoder.encode(user.getPassword());
-			user.setPassword(encryptedPassword);
+			user.setPassword(user.getPassword());
 			
 			for(UserRole ur:userRoles) 
 			{
@@ -122,6 +118,7 @@ public class UserServiceStubImpl implements UserService{
 	
 	
 	}
+	
 	
      
 }
