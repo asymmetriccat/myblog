@@ -68,8 +68,7 @@ public class PostServiceStubImpl implements PostService {
 		 this.posts.add(post);
 		 return post;
 	}
-	public void savePost(Post post) {
-		
+	public Post savePost(Post post) {
+		return postDao.save(post);
 	}
- 
 }
