@@ -22,7 +22,7 @@ public class HomeController {
 	@RequestMapping(value="/posts/latest10Posts", method=RequestMethod.GET)
 	public ResponseEntity<List<Post>> ShowLatest10Posts() {
 		List<Post> latest10Posts = postService.findLatest10();
-		HttpStatus status= latest10Posts.isEmpty()? HttpStatus.OK:HttpStatus.NOT_FOUND; 
+		HttpStatus status= latest10Posts.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK; 
 		return new ResponseEntity<List<Post>>(latest10Posts,status);
 	}
 	

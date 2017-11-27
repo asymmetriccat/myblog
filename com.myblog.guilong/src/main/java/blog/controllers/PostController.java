@@ -22,7 +22,7 @@ public class PostController {
 	@RequestMapping(value="/posts/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Post> getPost (@PathVariable Long id){
 	Post post=postService.findById(id);
-	HttpStatus status= post!=null? HttpStatus.OK:HttpStatus.NOT_FOUND; 
+	HttpStatus status= post==null? HttpStatus.NOT_FOUND:HttpStatus.OK; 
 	return new ResponseEntity<Post>(post,status);	
 	}
 	
