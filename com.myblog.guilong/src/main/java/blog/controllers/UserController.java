@@ -29,7 +29,7 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
     public User updateUser(@RequestBody User input) {
         User user = userService.findByUsername(input.getUsername());
         user.setUsername(input.getUsername());

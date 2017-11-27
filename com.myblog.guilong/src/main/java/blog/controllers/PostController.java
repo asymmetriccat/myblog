@@ -34,7 +34,7 @@ public class PostController {
 		return new ResponseEntity<Post>(newPost, status);
    }
 	
-	@RequestMapping(value="/posts", method=RequestMethod.GET)
+	@RequestMapping(value="/posts", method=RequestMethod.DELETE)
 	public ResponseEntity<String> deletePost(@PathVariable Long post_id){
 		HttpStatus status;
 		Post toDelete =postService.findById(post_id);
